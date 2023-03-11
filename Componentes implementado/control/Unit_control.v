@@ -11,6 +11,10 @@ module Unit_control (
     output reg AluOutCtrl,
     output reg WritePC,
     output reg WriteEPC,
+    output reg WRmem,
+    output reg Store_control,
+    output reg WR_A,
+    output reg WriteReg,
     
 
 
