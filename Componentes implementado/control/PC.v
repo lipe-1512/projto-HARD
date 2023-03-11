@@ -20,6 +20,11 @@ wire [31:0] Store_out;
 wire [2:0] IorD;
 wire [31:0] A; /**/
 wire WR_A;
+wire WriteReg;
+wire RS;
+wire RT;
+
+
 
 
 
@@ -37,7 +42,7 @@ mux_cause_control m_c_c(
 );
 
 mux_PCSource m_PCS(
-    Result, AluOutCtrl, {PC[31:28],*/*Tem que fazer o jumpshifted*/}, {{24{1'b0}}, Mem_out[7:0]}, EPC_out, PCSource_control, m_PCS_out
+    Result, AluOutCtrl, {PC[31:28],*/*jumpshifted*/}, {{24{1'b0}}, Mem_out[7:0]}, EPC_out, PCSource_control, m_PCS_out
 );
 
 muxStore Store(
@@ -49,7 +54,7 @@ mux_iord iord(
 );
 
 mux_RegDst RegDst(
-    
+
 );
 //REG
 
@@ -66,7 +71,7 @@ Registrador EPC(
 );
 
 Registrador A(
-    clk, reset, WR_A, /* mux_RegDst */,
+    clk, reset, WR_A, /* Banco de Reg */,
 );
 
 // Unit_Control
@@ -76,6 +81,11 @@ Registrador A(
 
 Memoria Mem(
     /* muxiord */, clk, WRmem, Store_out, Mem_out
+);
+
+//Bank_of_Reg
+Banco_reg Registrador(
+    clk, reset, WriteReg, RS, RT, /*mux_RegDst*/
 );
 
 
